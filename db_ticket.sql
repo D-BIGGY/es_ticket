@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Giu 05, 2023 alle 09:42
+-- Creato il: Giu 05, 2023 alle 10:54
 -- Versione del server: 10.4.18-MariaDB
 -- Versione PHP: 8.0.3
 
@@ -29,8 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `anomalia` (
   `id_anomalia` int(11) NOT NULL,
-  `descrizione` int(11) NOT NULL
+  `descrizione` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `anomalia`
+--
+
+INSERT INTO `anomalia` (`id_anomalia`, `descrizione`) VALUES
+(1, 'telecamera frontale non funzionante');
 
 -- --------------------------------------------------------
 
@@ -46,6 +53,13 @@ CREATE TABLE `apparecchio` (
   `Modello` varchar(25) NOT NULL,
   `id_cliente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `apparecchio`
+--
+
+INSERT INTO `apparecchio` (`id_app`, `descrizione`, `tipo`, `marca`, `Modello`, `id_cliente`) VALUES
+(1, 'telefono pazzo', 'telefono cellulare', 'xiaomi', 'redme note', 1);
 
 -- --------------------------------------------------------
 
@@ -64,6 +78,13 @@ CREATE TABLE `cliente` (
   `telefono` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dump dei dati per la tabella `cliente`
+--
+
+INSERT INTO `cliente` (`id_cliente`, `nomeUtente`, `nome`, `cognome`, `password`, `email`, `indirizzo`, `telefono`) VALUES
+(1, 'Atzeni', 'Matteo', 'Atzeni', 'password', 'matzeni@chilesotti.it', 'via valdellette', '0445 535550');
+
 -- --------------------------------------------------------
 
 --
@@ -72,13 +93,20 @@ CREATE TABLE `cliente` (
 
 CREATE TABLE `pda` (
   `id_pda` int(11) NOT NULL,
-  `denominazione` int(11) NOT NULL,
-  `indirizzo` int(11) NOT NULL,
-  `citta` int(11) NOT NULL,
-  `telefono` int(11) NOT NULL,
-  `email` int(11) NOT NULL,
-  `web` int(11) NOT NULL
+  `denominazione` varchar(50) NOT NULL,
+  `indirizzo` varchar(50) NOT NULL,
+  `citta` varchar(50) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `web` varchar(70) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `pda`
+--
+
+INSERT INTO `pda` (`id_pda`, `denominazione`, `indirizzo`, `citta`, `telefono`, `email`, `web`) VALUES
+(1, 'pazza, davvero sgravata', 'via valdellette 48', 'lugo di vicenza', '3333333333', 'ldallacosta@chilesotti.it', 'no fra, web pazzo');
 
 -- --------------------------------------------------------
 
@@ -97,6 +125,13 @@ CREATE TABLE `tecnico` (
   `password` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dump dei dati per la tabella `tecnico`
+--
+
+INSERT INTO `tecnico` (`id_tecnico`, `nome`, `cognome`, `qualifica`, `email`, `id_pda`, `username`, `password`) VALUES
+(2, 'Lorenzo', 'Dalla Costa', 'sgravata', 'ldallacosta@chilesotti.it', 1, 'Lorenzo', 'password');
+
 -- --------------------------------------------------------
 
 --
@@ -105,16 +140,24 @@ CREATE TABLE `tecnico` (
 
 CREATE TABLE `ticket` (
   `id_ticket` int(11) NOT NULL,
-  `stato` int(11) NOT NULL,
-  `tempoStimato` int(11) NOT NULL,
+  `stato` int(11) NOT NULL COMMENT '0(in attesa),1(in lavoro),2(chiuso)',
+  `tempoStimato` int(11) DEFAULT NULL,
   `dataInizio` datetime NOT NULL,
   `dataFine` datetime NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_app` int(11) NOT NULL,
   `id_anomalia` int(11) NOT NULL,
-  `id_tecnico` int(11) NOT NULL,
+  `id_tecnico` int(11) DEFAULT NULL,
   `id_pda` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `ticket`
+--
+
+INSERT INTO `ticket` (`id_ticket`, `stato`, `tempoStimato`, `dataInizio`, `dataFine`, `id_cliente`, `id_app`, `id_anomalia`, `id_tecnico`, `id_pda`) VALUES
+(3, 0, 0, '2023-06-05 10:08:03', '2023-06-05 10:08:03', 1, 1, 1, 2, 1),
+(4, 0, NULL, '2023-06-05 10:10:44', '2023-06-05 10:10:44', 1, 1, 1, NULL, 1);
 
 --
 -- Indici per le tabelle scaricate
@@ -171,37 +214,37 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT per la tabella `anomalia`
 --
 ALTER TABLE `anomalia`
-  MODIFY `id_anomalia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_anomalia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `apparecchio`
 --
 ALTER TABLE `apparecchio`
-  MODIFY `id_app` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_app` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `pda`
 --
 ALTER TABLE `pda`
-  MODIFY `id_pda` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `tecnico`
 --
 ALTER TABLE `tecnico`
-  MODIFY `id_tecnico` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tecnico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ticket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Limiti per le tabelle scaricate
