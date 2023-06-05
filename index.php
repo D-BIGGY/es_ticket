@@ -1,4 +1,6 @@
 <?php  
+session_start();
+$_SESSION["logged"] =false;
 if(isset($_POST["buttonlogin"])){
     header("location: login.php");
 }
@@ -26,12 +28,14 @@ if(isset($_POST['visualizza_elencoTicket'])) {
                 </a>
             </div>
         </div>
-        <div class="immagine_negozio">
-            <img src="img/negozio.webp" alt="negozio">
-        </div>
-        <div class="description">
-            <h2>descrizione</h2>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <div id="corpo" class="row">
+            <div class="col-8">
+                <img src="img/negozio.webp" alt="negozio">
+            </div>
+            <div class="col-4" id="descrizione">
+                <h2>descrizione</h2>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
         </div>
         <div class="operazioni">
             <form action="" method="POST">
