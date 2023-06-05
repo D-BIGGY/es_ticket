@@ -48,6 +48,10 @@ include_once("connection.php");
         if(isset($_POST["action"]) && $_POST["action"] == "registra"){
             $nome = $_POST["Nome"];
             $cognome = $_POST["Cognome"];
+            $username = $_POST["Username"];
+            $pw = $_POST["Password"]
+            //fai mettere 2 volte la pw per sicurezza
+                
             $stampa = $mysqli_query("INSERT INTO `cliente` (`nomeUtente`, `nome`, `cognome`, `password`, `email`, `indirizzo`, `telefono`) VALUES ('".."', 'Matteo', 'Atzeni', 'password', 'matzeni@chilesotti.it', 'via valdellette', '0445 535550');")
         }else if(isset($_POST["action"]) && $_POST["action"] == "login"){//else if perchè altrimenti conterebbe anche quando non è settato
 
