@@ -10,13 +10,14 @@ include_once("connection.php");
     <div class="form-container sign-up-container">
         <form action="#" method="POST">
             <h1>Crea Account</h1>
-            <input type="text" placeholder="Nome" required=""/>
-            <input type="text" placeholder="Cognome" required=""/>
-            <input type="text" placeholder="Username" required=""/>
-            <input type="password" placeholder="Password" required=""/>
-            <input type="email" placeholder="Email" required=""/>
-            <input type="text" placeholder="Indirizzo" required=""/>
-            <input type="text" placeholder="Numero di telefono" required="" />
+            <input type="text" placeholder="Nome" name="Nome" required=""/>
+            <input type="text" placeholder="Cognome" name="Cognome" required=""/>
+            <input type="text" placeholder="Username" name="Username" required=""/>
+            <input type="password" placeholder="Password" name="Password" required=""/>
+            <input type="password" placeholder="Reinserisci la password" name="Password2" required=""/>
+            <input type="email" placeholder="Email" name="Email" required=""/>
+            <input type="text" placeholder="Indirizzo" name="Indirizzo" required=""/>
+            <input type="text" placeholder="NumeroDiTelefono" name="Telefono" required="" />
             <input type="hidden" name="action" value="registra">
             <button>Registrati</button>
         </form>
@@ -49,8 +50,11 @@ include_once("connection.php");
             $nome = $_POST["Nome"];
             $cognome = $_POST["Cognome"];
             $username = $_POST["Username"];
-            $pw = $_POST["Password"]
-            //fai mettere 2 volte la pw per sicurezza
+            $pw = $_POST["Password"];
+            $mail = $_POST["Email"];
+            $indirizzo  =$_POST["Indirizzo"];
+            $telefono = $_POST["Telefono"]
+            //fai mettere 2 volte la pw per sicurezza                                                                                              
                 
             $stampa = $mysqli_query("INSERT INTO `cliente` (`nomeUtente`, `nome`, `cognome`, `password`, `email`, `indirizzo`, `telefono`) VALUES ('".."', 'Matteo', 'Atzeni', 'password', 'matzeni@chilesotti.it', 'via valdellette', '0445 535550');")
         }else if(isset($_POST["action"]) && $_POST["action"] == "login"){//else if perchè altrimenti conterebbe anche quando non è settato
