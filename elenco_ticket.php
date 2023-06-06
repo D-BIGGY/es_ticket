@@ -1,5 +1,7 @@
 <?php 
-if(!$_SESSION["logged"]){
+session_start();
+include_once("connection.php");
+if(!isset($_SESSION["id"])){
     header("location: login.php");
 }else{
 ?>
@@ -8,6 +10,9 @@ if(!$_SESSION["logged"]){
 
     </head>
     <body>
+        <?php
+            
+        ?>
         <h1>elenco ticket</h1>
     </body>
 </html>
