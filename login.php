@@ -1,5 +1,6 @@
 <?php 
 include_once("connection.php");
+session_start();
 ?>
 <html>
     <head>
@@ -18,16 +19,16 @@ include_once("connection.php");
             <input type="email" placeholder="Email" name="Email" required=""/>
             <input type="text" placeholder="Indirizzo" name="Indirizzo" required=""/>
             <input type="text" placeholder="NumeroDiTelefono" name="Telefono" required="" />
-            <input type="hidden" name="action" value="registra">
+            <input type="hidden" name="type" value="registra">
             <button>Registrati</button>
         </form>
     </div>
     <div class="form-container sign-in-container">
         <form action="#" method="POST">
             <h1>Accedi</h1>
-            <input type="text" placeholder="Username" required=""/>
-            <input type="password" placeholder="Password" required=""/>
-            <input type="hidden" name="action" value="login">
+            <input type="text" placeholder="Username" name="Username"required=""/>
+            <input type="password" placeholder="Password" name="Password"required=""/>
+            <input type="hidden" name="type" value="login">
             <button>Accedi</button>
         </form>
     </div>
@@ -46,20 +47,40 @@ include_once("connection.php");
         </div>
     </div>
     <?php
-        if(isset($_POST["action"]) && $_POST["action"] == "registra"){
-            $nome = $_POST["Nome"];
-            $cognome = $_POST["Cognome"];
+        if(isset($_POST["type"]) && $_POST["type"]== "registra"){
+            echo("registra");
+            $replace = ["'","-","\"","\\","|","!","£","$","%","&","/","(",")","=","?","^","<",">","*","+","_",",",";",".",":","[","]","{","}","#","@","°","§"];
+            $nome = str_replace($replace,"",$_POST["Nome"]);
+            $cognome = str_replace($replace,"",$_POST["Cognome"]);
             $username = $_POST["Username"];
             $pw = $_POST["Password"];
+            $pw2 = $_POST["Password2"];
             $mail = $_POST["Email"];
-            $indirizzo  =$_POST["Indirizzo"];
-            $telefono = $_POST["Telefono"]
-            //fai mettere 2 volte la pw per sicurezza                                                                                              
-                
-            $stampa = $mysqli_query("INSERT INTO `cliente` (`nomeUtente`, `nome`, `cognome`, `password`, `email`, `indirizzo`, `telefono`) VALUES ('".."', 'Matteo', 'Atzeni', 'password', 'matzeni@chilesotti.it', 'via valdellette', '0445 535550');")
-        }else if(isset($_POST["action"]) && $_POST["action"] == "login"){//else if perchè altrimenti conterebbe anche quando non è settato
-
-        }
+            $indirizzo  =str_replace($replace,"",$_POST["Indirizzo"]);
+            $telefono = str_replace($replace,"",$_POST["Telefono"]);
+            $go = true;
+            if($pw!=$pw2){
+                $go=false;
+            }
+            if($nome == ""  && $cognome == "" && $indirizzo == "" && $telefono == ""){
+                $go =false;
+            }
+            if($go){
+                $stampa = mysqli_query($con,
+                    "INSERT INTO cliente (nomeUtente, nome, cognome, password, email, indirizzo, telefono) VALUES ('".$username."', '".$nome."', '".$cognome."', '".md5($pw)."', '".$mail."', '".$indirizzo."', '".$telefono."')");
+            }
+            }else if(isset($_POST["type"]) && $_POST["type"] == "login"){//else if perchè altrimenti conterebbe anche quando non è settato
+                $pw = md5($_POST["Password"]);
+                echo $pw;
+                $stampa = mysqli_query($con, "SELECT * FROM cliente WHERE cliente.nomeUtente = '".$_POST["Username"]."'AND cliente.password ='".$pw."'");
+                var_dump($stampa);
+                if(mysqli_num_rows($stampa) >0){
+                    $robba = mysqli_fetch_assoc($stampa);
+                    $_SESSION["id"] = $robba["id_cliente"];
+                    $_SESSION["nomeUtente"] = $robba["nomeUtente"];
+                    header("location: index.php");
+                }
+            }
     ?>
     </body>
     <script>

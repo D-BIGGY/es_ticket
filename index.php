@@ -1,6 +1,5 @@
 <?php  
 session_start();
-$_SESSION["logged"] =false;
 if(isset($_POST["buttonlogin"])){
     header("location: login.php");
 }
@@ -44,9 +43,14 @@ if(isset($_POST['visualizza_elencoTicket'])) {
                 <input type="submit" name="visualizza_elencoTicket" value = "visualizza i tuoi ticket">
             </form>
         </div>
-        <div class="footer">
+        <footer>
             <h2>Contatti</h2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </div>
+        </footer>
     </body>
+    <?php
+        if(isset($_SESSION["id"])){
+            echo "<script type='text/javascript'>alert('accesso effettuato come ".$_SESSION["nomeUtente"]."');</script>";
+        }
+    ?>
 </html>
