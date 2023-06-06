@@ -76,6 +76,7 @@ session_start();
                 var_dump($stampa);
                 if(mysqli_num_rows($stampa) >0){
                     $robba = mysqli_fetch_assoc($stampa);
+                    $_SESSION["time"] = 0;
                     $_SESSION["id"] = $robba["id_cliente"];
                     $_SESSION["nomeUtente"] = $robba["nomeUtente"];
                     header("location: index.php");

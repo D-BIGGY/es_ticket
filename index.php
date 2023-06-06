@@ -49,8 +49,9 @@ if(isset($_POST['visualizza_elencoTicket'])) {
         </footer>
     </body>
     <?php
-        if(isset($_SESSION["id"])){
+        if(isset($_SESSION["id"]) && $_SESSION["time"] == 0){
             echo "<script type='text/javascript'>alert('accesso effettuato come ".$_SESSION["nomeUtente"]."');</script>";
+            $_SESSION["time"] = 1;
         }
     ?>
 </html>
